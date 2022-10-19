@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "473904200239",
+    "project_id": "fcm-notification-c2d72",
+    "storage_bucket": "fcm-notification-c2d72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473904200239:android:00d537b9f18730190e24da",
+        "android_client_info": {
+          "package_name": "com.fcmtest.fcmnoti"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "473904200239-ote3spb4337jig8agfnfuc91cdmq29v0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKyZ1qLnuOK-OqQR3tsvLdMm_AXDsCkPI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "473904200239-ote3spb4337jig8agfnfuc91cdmq29v0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
