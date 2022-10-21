@@ -3,14 +3,25 @@ import React from "react";
 import NotiButton from "./components/NotiButton";
 import axios from "axios";
 import { Button, TextInput } from "react-native-paper";
-import * as Notifications from "expo-notifications";
-
-import { ExpoPushMessages } from "../api/ExpoPushMessages";
+import {
+  registerForPushNotificationsAsync,
+  schedulePushNotification,
+} from "../api/PushNotificationAPI";
+import { useNavigation } from "@react-navigation/native";
 
 export default LoginScreen = () => {
   const [userId, setUserId] = React.useState("");
   const [userPassword, setUserPassword] = React.useState("");
   const [token, setToken] = React.useState("");
+
+  const navi = useNavigation();
+
+  React.useEffect(() => {
+    async function getToken() {
+      setToken(await registerForPushNotificationsAsync());
+    }
+    getToken();
+  }, []);
 
   const LoginAxiosConfig = {
     baseURL: "http://192.168.0.10:3000",
@@ -49,7 +60,24 @@ export default LoginScreen = () => {
     };
     console.log(LoginUser);
 
-    return await LoginAxios.post("/login", LoginUser);
+    let result = await (await LoginAxios.post("/login", LoginUser)).data;
+    console.log(`I'm the login result >`);
+    console.log(result);
+
+    //Login Notification >> 따로 메소드를 분리할까?
+    if (result.status === "00") {
+      schedulePushNotification(
+        "Login Success!",
+        "Your token is > ",
+        await result.data.token
+      );
+      navi.navigate("Home");
+    } else {
+      schedulePushNotification(
+        "Login Failed :(",
+        "Please check your ID and Password"
+      );
+    }
   };
 
   return (
@@ -76,13 +104,11 @@ export default LoginScreen = () => {
       <Button
         style={{ height: 50 }}
         onPress={async () => {
-          setToken((await Notifications.getExpoPushTokenAsync()).data);
-          // setToken((await Notifications.getDevicePushTokenAsync()).data);
-          let result = await onSubmit().data;
-          console.log(`I'm the result`);
-          console.log(result);
-
-          ExpoPushMessages(result.token, `Your token is > ${result.token}`);
+          await onSubmit();
+          // let result = await (await onSubmit()).data;
+          // console.log(`I'm the result`);
+          // console.log(result);
+          // schedulePushNotification(await result.data.token);
         }}
       >
         Login
