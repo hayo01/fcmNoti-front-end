@@ -6,6 +6,7 @@ import * as Notifications from "expo-notifications";
 
 import LoginScreen from "./src/screens/LoginScreen";
 import Home from "./src/screens/Home";
+import OrderBook from "./src/screens/OrderBook";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ export default function App() {
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="OrderBook" component={OrderBook} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

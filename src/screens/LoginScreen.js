@@ -114,6 +114,7 @@ export default LoginScreen = () => {
         Login
       </Button>
       <NotiButton />
+      <Button onPress={() => navi.navigate("OrderBook")}>Order Book</Button>
     </View>
   );
 };
