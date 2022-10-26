@@ -33,13 +33,14 @@ const WebSocketAPI = {
 
     ws.onmessage = e => {
       // a message was received
-      if (debug) console.log(e.data);
+      // if (debug)
+      // console.log(e.data);
 
       if (e.data !== "RDS WebSocket Connected")
         try {
           setRdsData(JSON.parse(e.data));
         } catch (error) {
-          setRdsData(e.data);
+          // setRdsData(e.data);
         }
     };
 

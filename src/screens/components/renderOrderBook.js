@@ -1,15 +1,20 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useRef } from "react";
 
-export const renderOrderBook = ({ item }) => {
+export const renderOrderBook = props => {
+  const { item, index } = props;
   return (
     <View style={styles.rows}>
-      <View>
-        <Text>Price : {item.price}</Text>
-      </View>
-      <View>
-        <Text>Amount : {item.amount}</Text>
-      </View>
+      {true && (
+        <>
+          <View style={{ flex: 1, marginHorizontal: 20 }}>
+            <Text>{item.price}</Text>
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text>{item.amount}</Text>
+          </View>
+        </>
+      )}
     </View>
   );
 };
@@ -17,6 +22,6 @@ export const renderOrderBook = ({ item }) => {
 const styles = StyleSheet.create({
   rows: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    // justifyContent: "space-around",
   },
 });
