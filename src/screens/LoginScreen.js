@@ -105,10 +105,6 @@ export default LoginScreen = () => {
         style={{ height: 50 }}
         onPress={async () => {
           await onSubmit();
-          // let result = await (await onSubmit()).data;
-          // console.log(`I'm the result`);
-          // console.log(result);
-          // schedulePushNotification(await result.data.token);
         }}
       >
         Login

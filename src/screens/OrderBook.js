@@ -1,5 +1,4 @@
-import { FlatList, StyleSheet, View } from "react-native";
-import { Text } from "react-native-paper";
+import { FlatList, StyleSheet, View, SafeAreaView } from "react-native";
 import React from "react";
 import WebSocketAPI from "../api/WebSocketAPI";
 import TradeAPI from "../api/TradeAPI";
@@ -128,7 +127,7 @@ export default function OrderBook() {
   };
 
   return (
-    <View>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.sellList}>
         <FlatList
           data={sellList.current.slice(0, 15).reverse()}
@@ -143,20 +142,16 @@ export default function OrderBook() {
           keyExtractor={(item, idx) => idx}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   buyList: {
-    borderStyle: "solid",
-    borderWidth: "5",
-    borderColor: "#43A06C",
+    flex: 1,
   },
   sellList: {
-    borderStyle: "solid",
-    borderWidth: "5",
-    borderColor: "#63AADE",
+    flex: 1,
     marginBottom: 10,
   },
 });
