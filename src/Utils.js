@@ -9,7 +9,9 @@ export const Utils = {
     return param === undefined ? [] : param;
   },
 
-  axiosGet: async (axiosType, endPoint, params) => {
+  axiosGet: async config => {
+    console.log(`axiosGet invoked >`);
+    let { axiosType, endPoint, params } = config;
     let response, errormessage;
 
     let result = { data: {}, status: "", message: "" };
@@ -44,8 +46,6 @@ export const Utils = {
       result.data.message = errormessage.toString();
       result.data.status = "9988";
       return result;
-    } else {
-      return response.data;
-    }
+    } else return response.data;
   },
 };

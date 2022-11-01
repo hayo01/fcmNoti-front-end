@@ -1,52 +1,31 @@
 import axios from "axios";
-import qs from "qs";
 import { Utils } from "../Utils";
-import apiConfig from "../config/apiConfig";
+import API_INFO from "../config/TradeApiConfig";
 
-// TRADE-API 호출 Public Axios
-const publicAxiosConfig = {
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded",
-  },
-  baseURL: apiConfig.TRADE_API_DOMAIN,
-  timeout: 3000,
-  transformRequest: (data, headers) => {
-    return qs.stringify(data);
-  },
-};
-
-let API_INFO = {
-  ORDERBOOK: {
-    ENDPOINT: "v2/ticker/orderBook",
-    DATA: {
-      pairName: "",
-    },
-  },
-  PUBLIC_SIGN_V2: {
-    ENDPOINT: "v2/ticker/publicSignV2",
-  },
-};
 let publicTradeAxios;
 (async () => {
-  publicTradeAxios = await axios.create(publicAxiosConfig);
+  publicTradeAxios = await axios.create(API_INFO.publicAxiosConfig);
 })();
 
 let response;
 const TradeAPI = {
   callPublicSignV2: async () => {
-    response = await Utils.axiosGet(
-      publicTradeAxios,
-      API_INFO.PUBLIC_SIGN_V2.ENDPOINT
-    );
+    console.log("Call publicSignV2 > ");
+    API_INFO.PUBLIC_SIGN_V2.API_CONFIG.axiosType = publicTradeAxios;
+
+    response = await Utils.axiosGet(API_INFO.PUBLIC_SIGN_V2.API_CONFIG);
+
     return response;
   },
+
   callOrderBook: async pairName => {
+    console.log(`Call OrderBook > ${pairName}`);
+    API_INFO.ORDERBOOK.API_CONFIG.axiosType = publicTradeAxios;
     API_INFO.ORDERBOOK.DATA.pairName = pairName;
-    response = await Utils.axiosGet(
-      publicTradeAxios,
-      API_INFO.ORDERBOOK.ENDPOINT,
-      API_INFO.ORDERBOOK.DATA
-    );
+    API_INFO.ORDERBOOK.API_CONFIG.params = API_INFO.ORDERBOOK.DATA;
+
+    response = await Utils.axiosGet(API_INFO.ORDERBOOK.API_CONFIG);
+
     return response;
   },
 };
