@@ -10,7 +10,7 @@ export const Utils = {
   },
 
   axiosGet: async config => {
-    console.log(`axiosGet invoked >`);
+    // console.log(`axiosGet invoked >`);
     let { axiosType, endPoint, params } = config;
     let response, errormessage;
 

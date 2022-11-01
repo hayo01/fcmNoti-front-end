@@ -3,7 +3,7 @@ import React from "react";
 
 import TradeAPI from "../../../api/TradeAPI";
 import WebSocketAPI from "../../../api/WebSocketAPI";
-import wsConfig from "../../../config/wsConfig";
+import API_INFO from "../../../config/TradeApiConfig";
 
 export default function CurrentPrice() {
   const [rdsData, setRdsData] = React.useState({});
@@ -11,11 +11,10 @@ export default function CurrentPrice() {
   const [nowPrice, setNowPrice] = React.useState();
   const ws = React.useRef({});
 
-  let pairName = "";
+  let pairName = "ETH/USDT";
   React.useEffect(() => {
     (async () => {
       let response = await TradeAPI.callPublicSignV2();
-      pairName = "ETH/USDT";
 
       if (response.status === "0") {
         setNowPrice(response.data[pairName].nowPrice);
@@ -31,19 +30,17 @@ export default function CurrentPrice() {
   //API통신 성공하면, WebSocket연결
   React.useEffect(() => {
     if (apiReady) {
+      API_INFO.PUBLIC_SIGN_V2.WS_CONFIG.setRdsData = setRdsData;
+
       ws.current = WebSocketAPI.addWebSocketEvent(
-        setRdsData,
-        wsConfig.PUBLICSIGN_V2.funcName,
-        wsConfig.PUBLICSIGN_V2.delYn,
-        wsConfig.PUBLICSIGN_V2.pairName,
-        wsConfig.PUBLICSIGN_V2.debug
+        API_INFO.PUBLIC_SIGN_V2.WS_CONFIG
       );
     }
   }, [apiReady]);
 
   //WS연결 성공하면, rdsData 변동 시마다 list 업데이트
   React.useEffect(() => {
-    console.log(rdsData.pair);
+    console.log(`rdsData pair > ${rdsData.pair}`);
 
     if (rdsData?.pair === pairName) {
       setNowPrice(rdsData.nowPrice);

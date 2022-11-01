@@ -1,14 +1,13 @@
 import { FlatList, StyleSheet, Alert, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 
 import WebSocketAPI from "../../../api/WebSocketAPI";
 import TradeAPI from "../../../api/TradeAPI";
-import wsConfig from "../../../config/wsConfig";
+import API_INFO from "../../../config/TradeApiConfig";
 import { RenderOrderBook } from "./RenderOrderBook";
-import { Utils } from "../../../Utils";
 import CurrentPrice from "./CurrentPrice";
+import { Utils } from "../../../Utils";
 import { sortList } from "../utils/sortList";
 
 export default function OrderBook() {
@@ -52,13 +51,10 @@ export default function OrderBook() {
   //API통신 성공하면, WebSocket연결
   React.useEffect(() => {
     if (apiReady) {
-      ws.current = WebSocketAPI.addWebSocketEvent(
-        setRdsData,
-        wsConfig.ORDERBOOK.funcName,
-        wsConfig.ORDERBOOK.delYn,
-        wsConfig.ORDERBOOK.pairName,
-        wsConfig.ORDERBOOK.debug
-      );
+      API_INFO.ORDERBOOK.WS_CONFIG.setRdsData = setRdsData;
+      API_INFO.ORDERBOOK.WS_CONFIG.pairName = "ETH/USDT";
+
+      ws.current = WebSocketAPI.addWebSocketEvent(API_INFO.ORDERBOOK.WS_CONFIG);
       //WS연결이 제대로 되었는지 확인할 수 있는 방법이 있나?
       setWsReady(!wsReady);
     }

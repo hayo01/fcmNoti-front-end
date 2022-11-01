@@ -2,16 +2,16 @@ import apiConfig from "../config/apiConfig";
 
 const WebSocketAPI = {
   wsCloseAll: ws => {
-    console.log(ws);
     ws.onclose();
   },
 
-  addWebSocketEvent: function (setRdsData, funcName, delYn, pairName, debug) {
+  addWebSocketEvent: config => {
+    let { setRdsData, funcName, delYn, pairName, debug } = config;
     const ws = new WebSocket(apiConfig.TRADE_WEBSOCKET_DOMAIN);
 
     ws.onopen = () => {
       // connection opened
-      // console.log(`connected > ${funcName} > ${JSON.stringify(ws)}`);
+      console.log(`connected > ${funcName} > ${JSON.stringify(ws)}`);
 
       try {
         ws.send(

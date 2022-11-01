@@ -10,7 +10,7 @@ let publicTradeAxios;
 let response;
 const TradeAPI = {
   callPublicSignV2: async () => {
-    console.log("Call publicSignV2 > ");
+    // console.log("Call publicSignV2 > ");
     API_INFO.PUBLIC_SIGN_V2.API_CONFIG.axiosType = publicTradeAxios;
 
     response = await Utils.axiosGet(API_INFO.PUBLIC_SIGN_V2.API_CONFIG);
@@ -19,13 +19,14 @@ const TradeAPI = {
   },
 
   callOrderBook: async pairName => {
-    console.log(`Call OrderBook > ${pairName}`);
-    API_INFO.ORDERBOOK.API_CONFIG.axiosType = publicTradeAxios;
-    API_INFO.ORDERBOOK.DATA.pairName = pairName;
-    API_INFO.ORDERBOOK.API_CONFIG.params = API_INFO.ORDERBOOK.DATA;
+    // console.log(`Call OrderBook > ${pairName}`);
+
+    //2 WAYS >> 1.eval() 2.direct assign
+    API_INFO.ORDERBOOK.PREPROCESS.map(element => {
+      eval(element);
+    });
 
     response = await Utils.axiosGet(API_INFO.ORDERBOOK.API_CONFIG);
-
     return response;
   },
 };
