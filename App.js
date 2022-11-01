@@ -6,7 +6,7 @@ import * as Notifications from "expo-notifications";
 
 import LoginScreen from "./src/screens/LoginScreen";
 import Home from "./src/screens/Home";
-import OrderBook from "./src/screens/OrderBook";
+import OrderBook from "./src/modules/orderBook/screens/OrderBook";
 
 const Stack = createNativeStackNavigator();
 

@@ -71,7 +71,7 @@ export default LoginScreen = () => {
         "Your token is > ",
         await result.data.token
       );
-      navi.navigate("Home");
+      navi.to("Home");
     } else {
       schedulePushNotification(
         "Login Failed :(",

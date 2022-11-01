@@ -1,22 +1,17 @@
-let ws;
+import apiConfig from "../config/apiConfig";
 
 const WebSocketAPI = {
-  wsCloseAll: function () {
-    return ws.onclose();
+  wsCloseAll: ws => {
+    console.log(ws);
+    ws.onclose();
   },
 
-  addWebSocketEvent: function (
-    funcName,
-    pairName,
-    setRdsData,
-    delYn,
-    debug = false
-  ) {
-    ws = new WebSocket("https://test-trade-api.leo12.com/rds");
+  addWebSocketEvent: function (setRdsData, funcName, delYn, pairName, debug) {
+    const ws = new WebSocket(apiConfig.TRADE_WEBSOCKET_DOMAIN);
 
     ws.onopen = () => {
       // connection opened
-      console.log("connected");
+      // console.log(`connected > ${funcName} > ${JSON.stringify(ws)}`);
 
       try {
         ws.send(
@@ -33,14 +28,11 @@ const WebSocketAPI = {
 
     ws.onmessage = e => {
       // a message was received
-      // if (debug)
-      // console.log(e.data);
-
       if (e.data !== "RDS WebSocket Connected")
         try {
           setRdsData(JSON.parse(e.data));
         } catch (error) {
-          // setRdsData(e.data);
+          console.error("WS ERROR > ", error);
         }
     };
 
@@ -50,10 +42,12 @@ const WebSocketAPI = {
     };
 
     ws.onclose = e => {
-      console.log("ws is closed");
       // connection closed
+      console.log("ws is closed");
       if (debug) console.log(e);
     };
+
+    return ws;
   },
 };
 
