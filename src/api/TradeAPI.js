@@ -22,9 +22,7 @@ const TradeAPI = {
     // console.log(`Call OrderBook > ${pairName}`);
 
     //2 WAYS >> 1.eval() 2.direct assign
-    API_INFO.ORDERBOOK.PREPROCESS.map(element => {
-      eval(element);
-    });
+    API_INFO.ORDERBOOK.PREPROCESS.map(element => eval(element));
 
     response = await Utils.axiosGet(API_INFO.ORDERBOOK.API_CONFIG);
     return response;

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useRef } from "react";
+import React from "react";
 
 export const RenderOrderBook = ({ item }) => {
   let price = Number(item.price).toFixed(2);
@@ -7,16 +7,12 @@ export const RenderOrderBook = ({ item }) => {
 
   return (
     <View style={styles.rows}>
-      {true && (
-        <>
-          <View style={{ flex: 1, marginHorizontal: 10 }}>
-            <Text>{price}</Text>
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text>{amount}</Text>
-          </View>
-        </>
-      )}
+      <View style={{ flex: 1, marginHorizontal: 10 }}>
+        <Text>{price}</Text>
+      </View>
+      <View style={{ flex: 1 }}>
+        <Text>{amount}</Text>
+      </View>
     </View>
   );
 };

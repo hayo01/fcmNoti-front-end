@@ -1,7 +1,4 @@
 export const Utils = {
-  jsonToArray: param => {
-    return Object.values(param);
-  },
   isEmpty: param => {
     return Object.keys(param).length === 0;
   },

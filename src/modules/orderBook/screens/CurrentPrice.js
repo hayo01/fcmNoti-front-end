@@ -18,10 +18,9 @@ export default function CurrentPrice() {
 
       if (response.status === "0") {
         setNowPrice(response.data[pairName].nowPrice);
-      } else {
-        console.error(`Can not get the Response > ${response}`);
-      }
-      setApiReady(!apiReady);
+
+        setApiReady(true);
+      } else console.error(`Can not get the Response > ${response}`);
     })();
 
     return () => WebSocketAPI.wsCloseAll(ws.current);
