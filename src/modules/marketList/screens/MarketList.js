@@ -22,6 +22,7 @@ export default function MarketList() {
 
   let initialMarkets = [];
   const [markets, setMarkets] = React.useState([]);
+  const [searchList, setSearchList] = React.useState([]);
 
   React.useEffect(() => {
     (async () => {
@@ -64,12 +65,20 @@ export default function MarketList() {
   return (
     <>
       <FiatTab setFiat={setFiat} nowFiat={fiat} />
-      <SearchBar />
-      <FlatList
-        data={markets}
-        renderItem={({ item }) => <RenderMarket item={item} />}
-        keyExtractor={(item, idx) => idx}
-      />
+      <SearchBar markets={markets} setSearchList={setSearchList} />
+      {searchList.length !== 0 ? (
+        <FlatList
+          data={searchList}
+          renderItem={({ item }) => <RenderMarket item={item} />}
+          keyExtractor={(item, idx) => idx}
+        />
+      ) : (
+        <FlatList
+          data={markets}
+          renderItem={({ item }) => <RenderMarket item={item} />}
+          keyExtractor={(item, idx) => idx}
+        />
+      )}
     </>
   );
 }
