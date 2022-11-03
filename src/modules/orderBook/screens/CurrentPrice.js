@@ -39,11 +39,11 @@ export default function CurrentPrice() {
 
   //WS연결 성공하면, rdsData 변동 시마다 list 업데이트
   React.useEffect(() => {
-    console.log(`rdsData pair > ${rdsData.pair}`);
+    // console.log(`rdsData pair > ${rdsData.pair}`);
 
     if (rdsData?.pair === pairName) {
       setNowPrice(rdsData.nowPrice);
-      console.log("now price > ", nowPrice);
+      // console.log("now price > ", nowPrice);
     }
   }, [rdsData]);
 

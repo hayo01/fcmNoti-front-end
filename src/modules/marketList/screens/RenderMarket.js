@@ -1,16 +1,23 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 
-export const RenderMarket = ({ item }) => {
+const RenderMarket = props => {
+  let item = props.item;
   let price = Number(item.price).toFixed(2);
   let change = Number(item.change).toFixed(2);
   let volume = Number(item.volume).toFixed(2);
 
+  const navi = useNavigation();
+
   return (
     <View style={styles.rows}>
-      <View style={styles.coinName}>
+      <TouchableOpacity
+        style={styles.coinName}
+        onPress={() => navi.navigate("OrderBook", { pairName: item.pairName })}
+      >
         <Text>{item.coinName}</Text>
-      </View>
+      </TouchableOpacity>
       <View style={styles.rightTd}>
         <Text>{price}</Text>
       </View>
@@ -27,6 +34,7 @@ export const RenderMarket = ({ item }) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   rows: {
     flexDirection: "row",
@@ -47,3 +55,5 @@ const styles = StyleSheet.create({
     color: "#FF0000",
   },
 });
+
+export default RenderMarket;

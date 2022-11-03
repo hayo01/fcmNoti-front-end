@@ -11,7 +11,7 @@ const WebSocketAPI = {
 
     ws.onopen = () => {
       // connection opened
-      console.log(`connected > ${funcName} > ${JSON.stringify(ws)}`);
+      // console.log(`connected > ${funcName} > ${JSON.stringify(ws)}`);
 
       try {
         ws.send(

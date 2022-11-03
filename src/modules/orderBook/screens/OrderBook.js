@@ -10,7 +10,9 @@ import CurrentPrice from "./CurrentPrice";
 import { Utils } from "../../../Utils";
 import { sortList } from "../utils/sortList";
 
-export default function OrderBook() {
+export default function OrderBook(props) {
+  const pairName = props?.route.params.pairName;
+
   const navi = useNavigation();
 
   const [rdsData, setRdsData] = React.useState({});
@@ -31,7 +33,7 @@ export default function OrderBook() {
   //첫 페이지 렌더링
   React.useEffect(() => {
     (async () => {
-      let response = await TradeAPI.callOrderBook("ETH/USDT");
+      let response = await TradeAPI.callOrderBook(pairName);
 
       if (response.status === "0") {
         setBuyList(response.data.buyList);
@@ -52,7 +54,7 @@ export default function OrderBook() {
   React.useEffect(() => {
     if (apiReady) {
       API_INFO.ORDERBOOK.WS_CONFIG.setRdsData = setRdsData;
-      API_INFO.ORDERBOOK.WS_CONFIG.pairName = "ETH/USDT";
+      API_INFO.ORDERBOOK.WS_CONFIG.pairName = pairName;
 
       ws.current = WebSocketAPI.addWebSocketEvent(API_INFO.ORDERBOOK.WS_CONFIG);
       //WS연결이 제대로 되었는지 확인할 수 있는 방법이 있나?

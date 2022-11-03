@@ -17,13 +17,20 @@ export const setList = (data, fiat) => {
   return initialMarkets;
 };
 
-export const getFiats = data => {
-  let fiats = [];
+export const fliterMarketList = (data, fiat, marketList) => {
+  let showMarkets = [];
+  let filteredMarkets = [];
 
-  Object.keys(data).map(key => {
-    fiats.push(key.split("/")[1]);
+  data.map(market => {
+    if (market.marketName.includes(fiat) && market.tradePageShow === "ON")
+      showMarkets.push(market.marketName);
   });
-  return fiats;
+
+  marketList.map(market => {
+    if (showMarkets.includes(market.pairName)) filteredMarkets.push(market);
+  });
+
+  return filteredMarkets;
 };
 
 export const updateMarkets = (markets, rdsData) => {

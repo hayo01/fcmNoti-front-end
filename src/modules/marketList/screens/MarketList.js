@@ -1,11 +1,15 @@
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import React from "react";
 
 import TradeAPI from "../../../api/TradeAPI";
 import WebSocketAPI from "../../../api/WebSocketAPI";
 import API_INFO from "../../../config/TradeApiConfig";
-import { setList, updateMarkets } from "../utils/marketListUtils";
-import { RenderMarket } from "./RenderMarket";
+import {
+  fliterMarketList,
+  setList,
+  updateMarkets,
+} from "../utils/marketListUtils";
+import RenderMarket from "./RenderMarket";
 import SearchBar from "./SearchBar";
 import FiatTab from "./FiatTab";
 
@@ -22,10 +26,17 @@ export default function MarketList() {
   React.useEffect(() => {
     (async () => {
       let response = await TradeAPI.callPublicSignV2();
+      let marketRes = await TradeAPI.callMarketList();
 
-      if (response.status === "0") {
+      if (response.status === "0" && marketRes.status === "0") {
         initialMarkets = setList(response.data, fiat);
-        setMarkets(initialMarkets);
+        let filteredMarkets = fliterMarketList(
+          marketRes.data,
+          fiat,
+          initialMarkets
+        );
+
+        setMarkets(filteredMarkets);
 
         setApiReady(true);
       } else console.error(`Can not get the Response > ${response}`);
@@ -56,7 +67,7 @@ export default function MarketList() {
       <SearchBar />
       <FlatList
         data={markets}
-        renderItem={RenderMarket}
+        renderItem={({ item }) => <RenderMarket item={item} />}
         keyExtractor={(item, idx) => idx}
       />
     </>

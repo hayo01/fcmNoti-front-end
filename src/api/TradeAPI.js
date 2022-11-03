@@ -27,7 +27,16 @@ const TradeAPI = {
     response = await Utils.axiosGet(API_INFO.ORDERBOOK.API_CONFIG);
     return response;
   },
+
+  callMarketList: async () => {
+    API_INFO.MARKETLIST.API_CONFIG.axiosType = publicTradeAxios;
+
+    response = await Utils.axiosGet(API_INFO.MARKETLIST.API_CONFIG);
+    return response;
+  },
 };
+
+export default TradeAPI;
 
 /*  fetchAPI를 이용 > IOS에서 'pretty...' 버그발생
 
@@ -56,5 +65,3 @@ const TradeAPI = {
   },
 };
 */
-
-export default TradeAPI;
